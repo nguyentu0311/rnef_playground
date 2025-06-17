@@ -1,6 +1,6 @@
-import { platformIOS } from '@rnef/platform-ios';
-import { platformAndroid } from '@rnef/platform-android';
-import { pluginMetro } from '@rnef/plugin-metro';
+import {platformIOS} from '@rnef/platform-ios';
+import {platformAndroid} from '@rnef/platform-android';
+import {pluginMetro} from '@rnef/plugin-metro';
 
 export default {
   bundler: pluginMetro(),
