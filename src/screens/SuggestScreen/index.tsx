@@ -168,8 +168,7 @@ const SuggestScreen = React.forwardRef<SuggestScreenRef, SuggestScreenProps>(
 
 const url_shorts =
   'https://m.media-amazon.com/images/I/91-UCbbhoiL._AC_SL1500_.jpg';
-const source =
-  'http://playertest.longtailvideo.com/adaptive/wowzaid3/playlist.m3u8';
+const source = 'https://www.w3schools.com/html/mov_bbb.mp4';
 
 const dummyData: ShortModel[] = [
   {

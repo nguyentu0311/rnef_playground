@@ -1,5 +1,6 @@
 import {useState, useRef} from 'react';
 import {ImageBackground, Text, StyleSheet, Pressable, View} from 'react-native';
+import {StyleProps} from 'react-native-reanimated';
 import Video, {VideoRef} from 'react-native-video';
 
 type OverlayCardProps = {
@@ -7,7 +8,7 @@ type OverlayCardProps = {
   source: string;
   title: string; // Ten video
   titleStyle?: string;
-  containerStyle?: string;
+  videoStyle?: StyleProps;
   imageStyle?: string;
   onPress?: () => void;
 };
@@ -17,6 +18,7 @@ export default function OverlayCard({
   source,
   title,
   titleStyle,
+  videoStyle,
   imageStyle,
   onPress,
 }: OverlayCardProps) {
@@ -29,11 +31,11 @@ export default function OverlayCard({
       onLongPress={() => setPreviewing(true)}
       onPressOut={() => setPreviewing(false)}
       delayLongPress={300}>
-      <View>
+      <View style={styles.defaultWrapper}>
         {previewing ? (
           <Video
             source={{uri: source}} // Sử dụng source từ props
-            className={imageStyle}
+            style={{flex: 1, ...videoStyle}} // Kết hợp với videoStyle
             resizeMode="cover"
             repeat
             muted
@@ -43,17 +45,10 @@ export default function OverlayCard({
         ) : (
           <ImageBackground
             source={{uri: thump_url}}
-            style={styles.image}
+            style={stycd les.image}
             imageStyle={{borderRadius: 12}} // bo góc
-            className={imageStyle}>
-            <Text
-              numberOfLines={2}
-              ellipsizeMode="tail"
-              style={styles.text}
-              className={titleStyle}>
-              {title}
-            </Text>
-          </ImageBackground>
+            className={imageStyle}
+          />
         )}
       </View>
     </Pressable>
@@ -61,17 +56,32 @@ export default function OverlayCard({
 }
 
 const styles = StyleSheet.create({
+  defaultWrapper: {
+    borderRadius: 12,
+    overflow: 'hidden', // Đảm bảo các phần tử con không tràn ra ngoài viền bo gó
+  },
   image: {
-    // width: 200,
-    // height: 300,
     justifyContent: 'flex-end', // Đặt Text dưới cùng
     padding: 10,
   },
-  text: {
+  gradient: {
+    position: 'absolute',
+    bottom: 0,
+    height: '40%', // 👈 mờ từ 40% dưới ảnh
+    width: '100%',
+  },
+  overlay: {
+    position: 'absolute',
+    left: 16,
+    right: 14,
+    bottom: 34,
+    backgroundColor: '#00000000', // nền trong suốt
+    borderRadius: 8,
+  },
+  overlayText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 12,
-    backgroundColor: 'rgba(0,0,0,0.4)', // nền mờ
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 6,

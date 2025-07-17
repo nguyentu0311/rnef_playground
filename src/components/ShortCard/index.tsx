@@ -10,7 +10,11 @@ export const ShortCard = ({item}: {item: ShortModel}) => {
         source={item.source ?? ''}
         title={item.name ?? ''}
         titleStyle="text-white text-sm"
-        containerStyle="w-[135] mr-[8]"
+        videoStyle={{
+          width: '100%',
+          height: 230,
+          borderRadius: 12,
+        }}
         imageStyle="h-[230] w-full rounded-xl"
       />
     </View>
