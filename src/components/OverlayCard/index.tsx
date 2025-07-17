@@ -50,6 +50,15 @@ export default function OverlayCard({
             className={imageStyle}
           />
         )}
+        <View style={styles.overlay}>
+          <Text
+            numberOfLines={2}
+            ellipsizeMode="tail"
+            style={styles.overlayText}
+            className={titleStyle}>
+            {title}
+          </Text>
+        </View>
       </View>
     </Pressable>
   );
