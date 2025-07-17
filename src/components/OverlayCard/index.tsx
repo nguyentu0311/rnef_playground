@@ -45,7 +45,7 @@ export default function OverlayCard({
         ) : (
           <ImageBackground
             source={{uri: thump_url}}
-            style={stycd les.image}
+            style={styles.image}
             imageStyle={{borderRadius: 12}} // bo góc
             className={imageStyle}
           />
