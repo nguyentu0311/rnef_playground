@@ -2,13 +2,17 @@ import {useState, useRef} from 'react';
 import {ImageBackground, Text, StyleSheet, Pressable, View} from 'react-native';
 import {StyleProps} from 'react-native-reanimated';
 import Video, {VideoRef} from 'react-native-video';
+import LinearGradient from 'react-native-linear-gradient';
+import {convertNumberUnit} from '@src/util';
 
 type OverlayCardProps = {
   thump_url?: string; // URL của hình ảnh thu nhỏ, nếu có
   source: string;
   title: string; // Ten video
+  viewCount: number; // So luong view
   titleStyle?: string;
   videoStyle?: StyleProps;
+  viewerStyle?: string;
   imageStyle?: string;
   onPress?: () => void;
 };
@@ -17,7 +21,9 @@ export default function OverlayCard({
   thump_url,
   source,
   title,
+  viewCount,
   titleStyle,
+  viewerStyle,
   videoStyle,
   imageStyle,
   onPress,
@@ -50,6 +56,10 @@ export default function OverlayCard({
             className={imageStyle}
           />
         )}
+        <LinearGradient
+          colors={['transparent', 'black']}
+          style={styles.gradient}
+        />
         <View style={styles.overlay}>
           <Text
             numberOfLines={2}
@@ -57,6 +67,13 @@ export default function OverlayCard({
             style={styles.overlayText}
             className={titleStyle}>
             {title}
+          </Text>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={styles.overlayViewerText}
+            className={viewerStyle}>
+            {convertNumberUnit(viewCount)} lượt xem
           </Text>
         </View>
       </View>
@@ -83,7 +100,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 16,
     right: 14,
-    bottom: 34,
+    bottom: 16,
     backgroundColor: '#00000000', // nền trong suốt
     borderRadius: 8,
   },
@@ -91,8 +108,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 12,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingBottom: 2,
+    borderRadius: 6,
+  },
+  overlayViewerText: {
+    color: '#fff',
+    fontWeight: 'regular',
+    fontSize: 12,
     borderRadius: 6,
   },
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {IconButton} from '@src/components/IconButton';
 import Color from '@src/configs/Colors';
-import {formatTimeAgo} from '@src/util/calculateTime';
+import {formatTimeAgo} from '@src/util';
 
 type ThumpnailProps = {
   title: string; //Ten video

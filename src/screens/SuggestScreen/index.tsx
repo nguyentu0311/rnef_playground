@@ -178,14 +178,24 @@ const dummyData: ShortModel[] = [
   },
   {thumb_url: url_shorts, source: source, name: 'Topgun trở lại'},
   {thumb_url: url_shorts, source: source, name: 'Trào lưu mới'},
+  {thumb_url: url_shorts, source: source, name: 'Topgun trở lại'},
+  {thumb_url: url_shorts, source: source, name: 'Trào lưu mới'},
 ];
 
 export const ShortsList = () => {
   return (
-    <View className="mt-4 mb-2 bg-[#E73A40]">
+    <View className="mt-4 mb-2">
       <View className="flex-row justify-between px-[12] mb-3">
         <Text className="text-white text-2xl font-bold">Video ngắn</Text>
-        <Text className="text-red-400">Xem thêm</Text>
+        <Text
+          className="text-xl"
+          style={{color: '#D21F3C'}}
+          onPress={() => {
+            // Handle "Xem thêm" press
+            console.log('Xem thêm pressed');
+          }}>
+          Xem thêm
+        </Text>
       </View>
       <FlatList
         horizontal
