@@ -184,8 +184,8 @@ const dummyData: ShortModel[] = [
 
 export const ShortsList = () => {
   return (
-    <View className="mt-4 mb-2">
-      <View className="flex-row justify-between px-[12] mb-3">
+    <View className="bg-black">
+      <View className="flex-row justify-between px-[12] mb-3 bg-transparent">
         <Text className="text-white text-2xl font-bold">Video ngắn</Text>
         <Text
           className="text-xl"

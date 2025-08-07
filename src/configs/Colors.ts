@@ -8,6 +8,7 @@ export default {
   white: 'white',
   greyB0: '#B0B0B8',
   red: '#E73A40',
+  redD21: '#D21F3C',
   black: '#000000',
   // Các màu khác...
 };

@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   overlayViewerText: {
-    color: '#fff',
+    color: '#81838E',
     fontWeight: 'regular',
     fontSize: 12,
     borderRadius: 6,

@@ -1,17 +1,19 @@
-import {View, Text, Image} from 'react-native';
+import {View} from 'react-native';
 import {LiveStreamModel} from '@src/models/LiveStreamModel';
+import VideoThumbnail from '@src/components/ViewThumpnails';
 
 export const LiveStreamCard = ({item}: {item: LiveStreamModel}) => {
   return (
-    <View className="w-[135] mr-3">
-      <Image
-        source={{uri: item.thumb_url}}
-        className="h-[230] w-full rounded-xl"
+    <View className="rounded-md w-[323] mr-2 rounded-tl-2xl rounded-tr-2xl">
+      <VideoThumbnail
+        title={item.name ?? ''}
+        thumbnailUrl={item.thumb_url ?? ''}
+        channel={''}
+        duration={''}
+        size="small"
+        onPress={() => console.log('Đã nhấn:', item.name)}
+        viewCount={125}
       />
-      <Text className="text-red-500 mt-1 font-semibold">TRỰC TIẾP</Text>
-      <Text className="text-white" numberOfLines={2}>
-        {item.name}
-      </Text>
     </View>
   );
 };

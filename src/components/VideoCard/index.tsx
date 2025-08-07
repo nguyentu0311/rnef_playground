@@ -8,9 +8,9 @@ export const VideoCard = ({item}: {item: Item}) => {
       thumbnailUrl={item.thumb_url ?? ''}
       channel={String(item.year)}
       duration={item.modified?.time ?? ''}
-      size="large" // bạn có thể đổi thành 'small' hoặc 'horizontal'
+      size="large"
       onPress={() => console.log('Đã nhấn:', item.name)}
-      viewCount={'0'} // giả sử không có dữ liệu viewCount)}
+      viewCount={11230} // giả sử có dữ liệu
     />
   );
 };

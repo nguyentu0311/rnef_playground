@@ -2,16 +2,16 @@ import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {IconButton} from '@src/components/IconButton';
 import Color from '@src/configs/Colors';
-import {formatTimeAgo} from '@src/util';
+import {formatTimeAgo, convertNumberUnit} from '@src/util';
 
 type ThumpnailProps = {
   title: string; //Ten video
   thumbnailUrl: string;
   channel: string; //Ten kenh
   duration: string; //Thoi gian
-  viewCount: string; //So luong nguoi xem
+  viewCount: number; //So luong nguoi xem
   seenTime?: string; //Thoi gian da xem
-  size?: 'small' | 'large' | 'horizontal';
+  size?: 'small' | 'large';
   onPress?: () => void;
 };
 
@@ -20,10 +20,13 @@ export default function VideoThumbnail({
   thumbnailUrl,
   channel,
   duration,
+  viewCount,
   size = 'large',
   onPress,
 }: ThumpnailProps) {
-  const isHorizontal = size === 'horizontal';
+  // const isHorizontal = size === 'horizontal';
+  const isSmall = size === 'small';
+
   // STATE
   console.log(
     'VideoThumbnail render ==== ',
@@ -33,23 +36,43 @@ export default function VideoThumbnail({
     duration,
     size
   );
-  //
   // FUNCTION
 
   //
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.container, isHorizontal && styles.row]}>
-      <Image
-        source={{uri: thumbnailUrl}}
-        style={[
-          styles.thumbnail,
-          size === 'small' && styles.thumbnailSmall,
-          isHorizontal && styles.thumbnailHorizontal,
-        ]}
-      />
-      <View style={styles.containerInfo}>
+      style={[styles.container, isSmall && styles.containerBorder]}>
+      {/* //isHorizontal && styles.row */}
+      <View>
+        <Image source={{uri: thumbnailUrl}} style={styles.thumbnail} />
+        {isSmall && (
+          <View style={styles.leftPosition}>
+            <View style={styles.liveStreamWrapper}>
+              <Image
+                source={require('@src/assets/images/icons/ic_live_stream.png')}
+                style={styles.icon}
+              />
+              <Text style={styles.textWithSpace}>TRỰC TIẾP</Text>
+            </View>
+            <View style={styles.viewerLiveStreamWrapper}>
+              <Image
+                source={require('@src/assets/images/icons/ic_eye_on.png')}
+                style={styles.icon}
+              />
+              <Text style={styles.textWithSpace}>
+                {convertNumberUnit(viewCount)} lượt xem
+              </Text>
+            </View>
+          </View>
+        )}
+
+        <View style={styles.timeWrapper}>
+          <Text style={styles.textWithoutSpace}>03:53</Text>
+        </View>
+      </View>
+      <View
+        style={[styles.containerInfo, isSmall && styles.containerInfoSmall]}>
         <Image
           source={{
             uri: 'https://i.pinimg.com/736x/f6/aa/24/f6aa2407d3ca6532e0304d6cd0e9291d.jpg',
@@ -61,7 +84,12 @@ export default function VideoThumbnail({
             {title}
           </Text>
           <Text numberOfLines={2} ellipsizeMode="tail" style={styles.meta}>
-            {'MyClip'} • {'1.2 Tr lượt xem'} • {formatTimeAgo(duration)}
+            {'Mr.Siro'} {/* Channel name */}
+            {!isSmall && viewCount
+              ? ` • ${convertNumberUnit(viewCount)} lượt xem`
+              : ''}
+            {' • '} {/* Channel view */}
+            {formatTimeAgo(duration)} {/* Channel last time upload */}
           </Text>
         </View>
         <IconButton
@@ -79,16 +107,24 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#000000',
   },
+  containerBorder: {
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
   row: {
     flexDirection: 'row',
   },
+  icon: {
+    width: 16,
+    height: 16,
+  },
   thumbnail: {
     width: '100%',
-    height: 200,
+    height: 198,
     backgroundColor: '#eee',
   },
   thumbnailSmall: {
-    height: 120,
+    height: 188,
   },
   thumbnailHorizontal: {
     width: 150,
@@ -100,6 +136,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     padding: 12,
+  },
+  containerInfoSmall: {
+    height: 88,
   },
   info: {
     flex: 1,
@@ -128,5 +167,49 @@ const styles = StyleSheet.create({
     paddingTop: 2.5,
     marginLeft: 12,
     justifyContent: 'flex-start',
+  },
+  leftPosition: {
+    position: 'absolute',
+    top: 8,
+    left: 8,
+    // backgroundColor: Color.blue,
+    flexDirection: 'row',
+  },
+  liveStreamWrapper: {
+    backgroundColor: Color.redD21,
+    borderRadius: 4,
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    flexDirection: 'row',
+  },
+  viewerLiveStreamWrapper: {
+    marginLeft: 8,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    borderRadius: 4,
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+    flexDirection: 'row',
+  },
+  timeWrapper: {
+    position: 'absolute',
+    right: 12,
+    bottom: 8,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    borderRadius: 4,
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+  },
+  textWithSpace: {
+    fontSize: 12,
+    color: 'white',
+    fontWeight: '600',
+    lineHeight: 16,
+    marginLeft: 4,
+  },
+  textWithoutSpace: {
+    fontSize: 12,
+    color: 'white',
+    fontWeight: '600',
+    lineHeight: 16,
   },
 });
