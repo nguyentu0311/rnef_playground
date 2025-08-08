@@ -186,9 +186,9 @@ export const ShortsList = () => {
   return (
     <View className="bg-black">
       <View className="flex-row justify-between px-[12] mb-3 bg-transparent">
-        <Text className="text-white text-2xl font-bold">Video ngắn</Text>
+        <Text className="text-white text-xl font-bold">Video ngắn</Text>
         <Text
-          className="text-xl"
+          className="text-sm"
           style={{color: '#D21F3C'}}
           onPress={() => {
             // Handle "Xem thêm" press
@@ -222,8 +222,8 @@ const dummyDataLiveStream: LiveStreamModel[] = [
 
 export const LiveStreamList = () => {
   return (
-    <View className="mt-4 mb-2 bg-[#E73A40]">
-      <Text className="text-white text-2xl font-bold px-[12] mb-3">
+    <View className="bg-black">
+      <Text className="text-white text-xl font-bold px-[12] mt-4 mb-3">
         Hot livestream
       </Text>
       <FlatList

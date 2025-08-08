@@ -115,8 +115,7 @@ export default function VideoThumbnail({
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: '#000000',
-    backgroundColor: Color.blue,
+    backgroundColor: '#000000',
   },
   containerBorder: {
     borderTopLeftRadius: 12,
@@ -149,7 +148,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   containerInfoSmall: {
-    height: 112,
+    height: 100, //88 height + 12 padding top
   },
   info: {
     flex: 1,
