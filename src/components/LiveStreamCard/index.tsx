@@ -4,7 +4,7 @@ import VideoThumbnail from '@src/components/ViewThumpnails';
 
 export const LiveStreamCard = ({item}: {item: LiveStreamModel}) => {
   return (
-    <View className="rounded-md w-[323] mr-2 rounded-tl-2xl rounded-tr-2xl">
+    <View className="rounded-md w-[323] mr-2">
       <VideoThumbnail
         title={item.name ?? ''}
         thumbnailUrl={item.thumb_url ?? ''}

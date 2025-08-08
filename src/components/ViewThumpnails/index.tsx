@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {IconButton} from '@src/components/IconButton';
 import Color from '@src/configs/Colors';
 import {formatTimeAgo, convertNumberUnit} from '@src/util';
+import ViewTopics from '../ViewTopics';
 
 type ThumpnailProps = {
   title: string; //Ten video
@@ -45,7 +46,10 @@ export default function VideoThumbnail({
       style={[styles.container, isSmall && styles.containerBorder]}>
       {/* //isHorizontal && styles.row */}
       <View>
-        <Image source={{uri: thumbnailUrl}} style={styles.thumbnail} />
+        <Image
+          source={{uri: thumbnailUrl}}
+          style={[styles.thumbnail, isSmall && styles.containerBorder]}
+        />
         {isSmall && (
           <View style={styles.leftPosition}>
             <View style={styles.liveStreamWrapper}>
@@ -66,10 +70,11 @@ export default function VideoThumbnail({
             </View>
           </View>
         )}
-
-        <View style={styles.timeWrapper}>
-          <Text style={styles.textWithoutSpace}>03:53</Text>
-        </View>
+        {!isSmall && (
+          <View style={styles.timeWrapper}>
+            <Text style={styles.textWithoutSpace}>03:53</Text>
+          </View>
+        )}
       </View>
       <View
         style={[styles.containerInfo, isSmall && styles.containerInfoSmall]}>
@@ -81,7 +86,7 @@ export default function VideoThumbnail({
         />
         <View style={styles.info}>
           <Text numberOfLines={2} ellipsizeMode="tail" style={styles.title}>
-            {title}
+            {title} {/* Movie name */}
           </Text>
           <Text numberOfLines={2} ellipsizeMode="tail" style={styles.meta}>
             {'Mr.Siro'} {/* Channel name */}
@@ -91,6 +96,11 @@ export default function VideoThumbnail({
             {' • '} {/* Channel view */}
             {formatTimeAgo(duration)} {/* Channel last time upload */}
           </Text>
+          {isSmall && (
+            <ViewTopics
+              topics={['Game', 'Esports', 'Free Fire', 'Liên Quân', 'Valorant']}
+            />
+          )}
         </View>
         <IconButton
           icon={require('@src/assets/images/icons/ic_more.png')}
@@ -105,7 +115,8 @@ export default function VideoThumbnail({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#000000',
+    // backgroundColor: '#000000',
+    backgroundColor: Color.blue,
   },
   containerBorder: {
     borderTopLeftRadius: 12,
@@ -138,7 +149,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   containerInfoSmall: {
-    height: 88,
+    height: 112,
   },
   info: {
     flex: 1,
@@ -172,7 +183,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 8,
     left: 8,
-    // backgroundColor: Color.blue,
     flexDirection: 'row',
   },
   liveStreamWrapper: {

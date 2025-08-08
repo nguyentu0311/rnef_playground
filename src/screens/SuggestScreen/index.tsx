@@ -210,8 +210,14 @@ export const ShortsList = () => {
 };
 
 const dummyDataLiveStream: LiveStreamModel[] = [
-  {thumb_url: url_shorts, name: 'Booyah đại chiến'},
-  {thumb_url: url_shorts, name: 'Live giờ vàng'},
+  {
+    thumb_url: url_shorts,
+    name: 'LIVE RUNETERRA | DUO CÙNG VỚI GM AME - KHÔNG LÊN MA...',
+  },
+  {
+    thumb_url: url_shorts,
+    name: 'LIVE RUNETERRA | DUO CÙNG VỚI GM AME - KHÔNG LÊN MA...',
+  },
 ];
 
 export const LiveStreamList = () => {
