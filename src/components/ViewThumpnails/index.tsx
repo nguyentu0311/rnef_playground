@@ -29,14 +29,14 @@ export default function VideoThumbnail({
   const isSmall = size === 'small';
 
   // STATE
-  console.log(
-    'VideoThumbnail render ==== ',
-    title,
-    thumbnailUrl,
-    channel,
-    duration,
-    size
-  );
+  // console.log(
+  //   'VideoThumbnail render ==== ',
+  //   title,
+  //   thumbnailUrl,
+  //   channel,
+  //   duration,
+  //   size
+  // );
   // FUNCTION
 
   //

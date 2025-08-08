@@ -37,6 +37,7 @@ const SuggestScreen = React.forwardRef<SuggestScreenRef, SuggestScreenProps>(
     const {} = props;
     const [videos, setVideos] = useState<Item[]>([]);
     const [page, setPage] = useState<number>(1);
+    const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const [isEnd, setIsEnd] = useState<boolean>(false);
@@ -46,7 +47,7 @@ const SuggestScreen = React.forwardRef<SuggestScreenRef, SuggestScreenProps>(
         const response = await apiInstance.get(
           `danh-sach/phim-moi-cap-nhat?page=${p}`
         );
-        console.log('response= ', response.data);
+        console.log('page = ', p, 'response= ', response.data);
         const responseModel: Root = mapToRoot(response.data);
         console.log('responseModel= ', responseModel);
         return responseModel.items;
@@ -65,24 +66,43 @@ const SuggestScreen = React.forwardRef<SuggestScreenRef, SuggestScreenProps>(
       }
     };
 
-    const loadVideos = async () => {
+    const loadVideos = useCallback(async () => {
+      console.log('loadVideo called', page);
       if (loading || isEnd) return;
       setLoading(true);
       const newVideos: Item[] = (await fetchVideos(page)) || [];
       if (newVideos.length < PAGE_SIZE) setIsEnd(true);
       setVideos(prev => [...prev, ...newVideos]);
       setLoading(false);
-    };
+    }, [loading, isEnd, page]);
 
-    useEffect(() => {
-      handleLoadMore();
-    }, [page]);
-
-    const handleLoadMore = async () => {
+    const handleLoadMore = useCallback(async () => {
       try {
+        console.log('handle load more called');
         await loadVideos();
       } catch (e) {}
-    };
+    }, [loadVideos]); // loadVideos cũng nên useCallback
+
+    useEffect(() => {
+      if (isFirstLoad || page > 1) {
+        handleLoadMore();
+        setIsFirstLoad(false);
+      }
+    }, [page, handleLoadMore, isFirstLoad]);
+
+    useEffect(() => {
+      for (let i = 0; i < videos.length; i++) {
+        console.log('video = ', i, videos[i].name);
+      }
+      console.log('video count = ', videos.length);
+    }, [videos]);
+
+    // const handleLoadMore = async () => {
+    //   try {
+    //     console.log('handle load more called 1');
+    //     await loadVideos();
+    //   } catch (e) {}
+    // };
 
     // Hàm chèn module mỗi 5 item
     const injectModules = (videoList: Item[]) => {
@@ -113,19 +133,22 @@ const SuggestScreen = React.forwardRef<SuggestScreenRef, SuggestScreenProps>(
     const finalList = injectModules(videos) as ListItem[];
 
     const onEndReached = () => {
-      if (loading === false) {
+      // console.log('onEndReached called 1');
+      if (!loading) {
+        // console.log('onEndReached called 2');
         setPage(prev => prev + 1);
-        setLoading(true);
       }
     };
 
     const onRefresh = useCallback(() => {
       setRefreshing(true);
       setPage(1);
+      setVideos([]);
+      handleLoadMore();
       setTimeout(() => {
         setRefreshing(false);
       }, 2000);
-    }, []);
+    }, [handleLoadMore]);
 
     return (
       <View className="flex-1 bg-[#141414]">
@@ -146,13 +169,13 @@ const SuggestScreen = React.forwardRef<SuggestScreenRef, SuggestScreenProps>(
           onEndReached={onEndReached}
           initialNumToRender={10}
           windowSize={3}
-          onEndReachedThreshold={0.8}
+          onEndReachedThreshold={0.5}
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
               onRefresh={onRefresh}
-              tintColor={Colors.orange}
-              colors={[Colors.white, Colors.orange]}
+              // tintColor={Colors.orange}
+              // colors={[Colors.white, Colors.orange]}
             />
           }
           ListFooterComponent={

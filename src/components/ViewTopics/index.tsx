@@ -1,6 +1,6 @@
 import Colors from '@src/configs/Colors';
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
 const MAX_ITEMS = 5;
 const MAX_LINES = 1; // bạn thay đổi thành 1,2...
@@ -15,7 +15,7 @@ export default function TopicTags({topics}: ViewTopicProps) {
   const [displayed, setDisplayed] = useState(initial);
 
   // lưu thông tin layout của từng item: { index: { y, height, width } }
-  const layoutsRef = useRef({});
+  const layoutsRef = useRef<{ [key: number]: { y: number; height: number; width: number; index: number } }>({});
 
   // để tránh vòng lặp vô hạn, nhớ chỉ cập nhật khi thực sự rút gọn
   const lastLengthRef = useRef(displayed.length);
@@ -27,9 +27,9 @@ export default function TopicTags({topics}: ViewTopicProps) {
   }, [displayed]);
 
   // gọi khi mỗi item có layout
-  const onItemLayout = index => e => {
+  const onItemLayout = (index: number) => e => {
     const {y, height, width} = e.nativeEvent.layout;
-    layoutsRef.current[index] = { y, height, width, index };
+    layoutsRef.current[index] = {y, height, width, index};
 
     // nếu đã đo đủ tất cả items hiện tại -> xử lý
     if (Object.keys(layoutsRef.current).length === displayed.length) {
